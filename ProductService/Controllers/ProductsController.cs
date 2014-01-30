@@ -28,26 +28,13 @@ namespace ProductService.Controllers
         // GET api/Products/5
         public Product GetProduct([FromODataUri] int key)
         {
-            Product product = db.Products.Find(key);
+            Product product = db.Products.SingleOrDefault(p => p.ID == key);
             if (product == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
             return product;
-        }
-
-        public HttpResponseMessage GetProductById(int id)
-        {
-            Product product = db.Products.SingleOrDefault(p => p.ID == id);
-            if (product == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, product);
-            }
         }
 
         // PUT api/Products/5
