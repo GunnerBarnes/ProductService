@@ -187,3 +187,5 @@ $RECYCLE.BIN/
 #=========================
 ProductService/obj/
 ProductService/bin/
+ProductService/App_Data/*.mdf
+ProductService/App_Data/*.ldf
