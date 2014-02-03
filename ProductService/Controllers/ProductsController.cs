@@ -38,7 +38,25 @@ namespace ProductService.Controllers
             return product;
         }
 
+        // GET /Products(1)/Supplier
+        public Supplier GetSupplier([FromODataUri] int key)
+        {
+            Product product = db.Products.SingleOrDefault(p => p.ID == key);
+            if (product == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
 
+            if (product.Supplier == null)
+            {
+                Supplier newSupplier = new Supplier();
+                newSupplier.Key = "test";
+                newSupplier.Name = "This product doesn't have a supplier";
+                return newSupplier;
+            }
+
+            return product.Supplier;
+        }
 
 
 
