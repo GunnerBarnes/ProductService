@@ -13,6 +13,7 @@ namespace ProductService
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Product>("Products");
+            builder.EntitySet<Supplier>("Suppliers");
             config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
         }
     }

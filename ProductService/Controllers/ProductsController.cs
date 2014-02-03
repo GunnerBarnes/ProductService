@@ -37,6 +37,15 @@ namespace ProductService.Controllers
             return product;
         }
 
+
+
+
+
+
+
+
+
+
         // PUT api/Products/5
         public HttpResponseMessage PutProduct(int id, Product product)
         {

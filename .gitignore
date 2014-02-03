@@ -179,3 +179,11 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+
+
+
+#=========================
+# My custom additions
+#=========================
+ProductService/obj/
+ProductService/bin/
