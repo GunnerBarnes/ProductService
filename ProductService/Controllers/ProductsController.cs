@@ -59,20 +59,15 @@ namespace ProductService.Controllers
         }
 
 
-
-
-
-
-
-        // PUT api/Products/5
-        public HttpResponseMessage PutProduct(int id, Product product)
+        // PUT odata/Products(5)
+        public HttpResponseMessage PutProduct([FromODataUri] int key, Product product)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            if (id != product.ID)
+            if (key != product.ID)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
