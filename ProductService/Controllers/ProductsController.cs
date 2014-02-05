@@ -86,7 +86,7 @@ namespace ProductService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        // POST api/Products
+        // POST odata/Products
         public HttpResponseMessage PostProduct(Product product)
         {
             if (ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace ProductService.Controllers
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, product);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = product.ID }));
+                response.Headers.Location = new Uri(Url.Link("odata", new { id = product.ID }));
                 return response;
             }
             else
@@ -104,10 +104,10 @@ namespace ProductService.Controllers
             }
         }
 
-        // DELETE api/Products/5
-        public HttpResponseMessage DeleteProduct(int id)
+        // DELETE odata/Products(5)
+        public HttpResponseMessage DeleteProduct([FromODataUri] int key)
         {
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Find(key);
             if (product == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
