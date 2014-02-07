@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.OData.Routing;
 using System.Web.Routing;
 using ProductService.Models;
 
@@ -95,7 +96,7 @@ namespace ProductService.Controllers
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, product);
-                response.Headers.Location = new Uri(Url.Link("odata", new { id = product.ID }));
+                response.Headers.Location = new Uri(Url.ODataLink(new EntitySetPathSegment("Product")));
                 return response;
             }
             else
