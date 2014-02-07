@@ -1,0 +1,39 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="3.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="ProductService.Models" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="Product">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Price" Type="Edm.Decimal" Nullable="false" />
+        <Property Name="Category" Type="Edm.String" />
+        <Property Name="OrgId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SupplierId" Type="Edm.String" />
+        <NavigationProperty Name="Supplier" Relationship="ProductService.Models.ProductService_Models_Product_Supplier_ProductService_Models_Supplier_SupplierPartner" ToRole="Supplier" FromRole="SupplierPartner" />
+      </EntityType>
+      <EntityType Name="Supplier">
+        <Key>
+          <PropertyRef Name="Key" />
+        </Key>
+        <Property Name="Key" Type="Edm.String" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+      </EntityType>
+      <Association Name="ProductService_Models_Product_Supplier_ProductService_Models_Supplier_SupplierPartner">
+        <End Type="ProductService.Models.Supplier" Role="Supplier" Multiplicity="0..1" />
+        <End Type="ProductService.Models.Product" Role="SupplierPartner" Multiplicity="0..1" />
+      </Association>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityContainer Name="Container" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Products" EntityType="ProductService.Models.Product" />
+        <EntitySet Name="Suppliers" EntityType="ProductService.Models.Supplier" />
+        <AssociationSet Name="ProductService_Models_Product_Supplier_ProductService_Models_Supplier_SupplierPartnerSet" Association="ProductService.Models.ProductService_Models_Product_Supplier_ProductService_Models_Supplier_SupplierPartner">
+          <End Role="SupplierPartner" EntitySet="Products" />
+          <End Role="Supplier" EntitySet="Suppliers" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

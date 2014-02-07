@@ -24,7 +24,11 @@ namespace ProductService.Controllers
         [Queryable]
         public IQueryable<Product> GetProducts()
         {
-            return db.Products.AsQueryable();
+            User user = new User();
+            user.Name = "Testing";
+            user.OrgId = 2;
+
+            return db.Products.AsQueryable().Where(p => p.OrgId == user.OrgId);
         }
 
         // GET api/Products/5
