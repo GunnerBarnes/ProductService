@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
 using System.Web.Routing;
+using Autofac.Core;
 using ProductService.Models;
 
 namespace ProductService.Controllers
@@ -19,22 +20,24 @@ namespace ProductService.Controllers
     public class ProductsController : ODataController
     {
         private ProductServiceContext db = new ProductServiceContext();
+        private readonly IUser _user;
+
+        public ProductsController(IUser user)
+        {
+            _user = user;
+        }
 
         // GET api/Products
         [Queryable]
         public IQueryable<Product> GetProducts()
         {
-            User user = new User();
-            user.Name = "Testing";
-            user.OrgId = 2;
-
-            return db.Products.AsQueryable().Where(p => p.OrgId == user.OrgId);
+            return db.Products.AsQueryable().Where(p => p.OrgId == _user.OrgId);
         }
 
         // GET api/Products/5
         public Product GetProduct([FromODataUri] int key)
         {
-            Product product = db.Products.SingleOrDefault(p => p.ID == key);
+            Product product = db.Products.SingleOrDefault(p => p.ID == key && p.OrgId == _user.OrgId);
             if (product == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -46,7 +49,7 @@ namespace ProductService.Controllers
         // GET /Products(1)/Supplier
         public Supplier GetSupplier([FromODataUri] int key)
         {
-            Product product = db.Products.SingleOrDefault(p => p.ID == key);
+            Product product = db.Products.SingleOrDefault(p => p.ID == key && p.OrgId == _user.OrgId);
             if (product == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));

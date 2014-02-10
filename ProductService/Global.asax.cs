@@ -16,12 +16,19 @@ namespace ProductService
     {
         protected void Application_Start()
         {
+            RegisterDependencies();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        private static void RegisterDependencies()
+        {
+            new IocRegistrar().RegisterDependencies();
         }
     }
 }
